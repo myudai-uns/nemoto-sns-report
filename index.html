@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>根本拓事務所 SNS運用月次レポート 2026年4月度</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
   :root {
     --primary: #1a1a2e;
@@ -182,10 +183,207 @@
   .platform-card .p-followers { font-size: 32px; font-weight: 700; }
   .platform-card .p-label { font-size: 11px; opacity: 0.7; }
 
+  /* Navigation / TOC */
+  .toc {
+    background: var(--card);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .toc .toc-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-light);
+    letter-spacing: 1px;
+    margin-right: 8px;
+  }
+  .toc a {
+    display: inline-block;
+    padding: 6px 14px;
+    background: var(--bg);
+    border-radius: 20px;
+    font-size: 13px;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .toc a:hover { background: var(--accent); color: #fff; }
+  .toc a.x-tag:hover { background: var(--x-color); }
+  .toc a.ig-tag:hover { background: var(--ig-color); }
+  .toc a.fb-tag:hover { background: var(--fb-color); }
+
+  /* Highlight cards - Top Posts */
+  .highlight-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .highlight-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    border-top: 5px solid var(--accent);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .highlight-card::before {
+    content: attr(data-rank);
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    font-size: 80px;
+    font-weight: 900;
+    color: rgba(230,126,34,0.08);
+    line-height: 1;
+  }
+  .highlight-card .hc-medal {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .highlight-card .hc-medal.gold { background: linear-gradient(135deg, #f1c40f, #e67e22); }
+  .highlight-card .hc-medal.silver { background: linear-gradient(135deg, #bdc3c7, #7f8c8d); }
+  .highlight-card .hc-medal.bronze { background: linear-gradient(135deg, #d35400, #a04000); }
+  .highlight-card .hc-platform {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+    margin-left: 4px;
+  }
+  .highlight-card .hc-platform.x { background: var(--x-color); }
+  .highlight-card .hc-platform.ig { background: var(--ig-color); }
+  .highlight-card .hc-platform.fb { background: var(--fb-color); }
+  .highlight-card .hc-metric {
+    font-size: 13px;
+    color: var(--text-light);
+    margin: 8px 0 2px;
+  }
+  .highlight-card .hc-value {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1.1;
+  }
+  .highlight-card .hc-value .unit { font-size: 14px; color: var(--text-light); margin-left: 4px; font-weight: 500; }
+  .highlight-card .hc-text {
+    font-size: 12px;
+    color: var(--text);
+    margin-top: 10px;
+    line-height: 1.5;
+    position: relative;
+    z-index: 1;
+  }
+  .highlight-card .hc-date { font-size: 11px; color: var(--text-light); margin-top: 8px; }
+
+  /* Chart containers */
+  .chart-wrap {
+    background: var(--card);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid var(--border);
+  }
+  .chart-wrap h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 12px;
+  }
+  .chart-box { position: relative; height: 280px; }
+  .chart-box.tall { height: 340px; }
+  .chart-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 20px;
+  }
+
+  /* KPI progress bar */
+  .kpi-row { display: flex; flex-direction: column; gap: 14px; margin: 16px 0; }
+  .kpi-item { background: #fff; border-radius: 8px; padding: 14px 18px; border: 1px solid var(--border); }
+  .kpi-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; font-size: 13px; }
+  .kpi-head .kpi-name { font-weight: 700; color: var(--text); }
+  .kpi-head .kpi-val { font-weight: 700; color: var(--primary); }
+  .kpi-head .kpi-val .unit { font-size: 11px; color: var(--text-light); margin-left: 2px; }
+  .kpi-bar { height: 10px; background: var(--border); border-radius: 5px; overflow: hidden; position: relative; }
+  .kpi-fill { height: 100%; border-radius: 5px; transition: width 0.5s; }
+  .kpi-fill.x-fill { background: linear-gradient(90deg, #333, #000); }
+  .kpi-fill.ig-fill { background: linear-gradient(90deg, #833AB4, #E1306C, #F77737); }
+  .kpi-fill.fb-fill { background: linear-gradient(90deg, #1877F2, #42A5F5); }
+  .kpi-note { font-size: 11px; color: var(--text-light); margin-top: 4px; }
+
+  /* Heatmap calendar */
+  .heatmap {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    max-width: 380px;
+  }
+  .hm-cell {
+    aspect-ratio: 1;
+    border-radius: 4px;
+    background: #eef2f6;
+    position: relative;
+    font-size: 10px;
+    color: var(--text-light);
+    padding: 3px;
+  }
+  .hm-cell.l1 { background: #fde3cf; }
+  .hm-cell.l2 { background: #f8c471; }
+  .hm-cell.l3 { background: #e67e22; color: #fff; }
+  .hm-cell.l4 { background: #b9550a; color: #fff; }
+  .hm-cell.empty { background: transparent; }
+  .hm-legend { display: flex; gap: 6px; align-items: center; font-size: 11px; color: var(--text-light); margin-top: 8px; }
+  .hm-legend .hm-cell { width: 14px; height: 14px; aspect-ratio: unset; padding: 0; }
+
+  /* Cross-platform comparison */
+  .cpc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .cpc-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+  .cpc-card .cpc-title { font-size: 11px; color: var(--text-light); margin-bottom: 6px; font-weight: 600; }
+  .cpc-card .cpc-winner {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 12px;
+    display: inline-block;
+    margin-bottom: 6px;
+  }
+  .cpc-card .cpc-winner.x { background: var(--x-color); }
+  .cpc-card .cpc-winner.ig { background: var(--ig-color); }
+  .cpc-card .cpc-winner.fb { background: var(--fb-color); }
+  .cpc-card .cpc-val { font-size: 22px; font-weight: 800; color: var(--primary); }
+
   @media print {
     body { background: #fff; }
     .cover { break-after: page; }
     .section { break-inside: avoid; }
+    .toc { display: none; }
   }
 </style>
 </head>
@@ -201,8 +399,20 @@
     <div class="note">集計期間: 2026年4月1日 〜 4月19日（暫定）</div>
   </div>
 
+  <!-- NAVIGATION / TOC -->
+  <nav class="toc">
+    <span class="toc-label">CONTENTS</span>
+    <a href="#glossary">用語解説</a>
+    <a href="#summary">全体サマリー</a>
+    <a href="#highlights">トップ投稿</a>
+    <a href="#compare">プラットフォーム比較</a>
+    <a href="#x-section" class="x-tag">X 詳細</a>
+    <a href="#ig-section" class="ig-tag">Instagram 詳細</a>
+    <a href="#fb-section" class="fb-tag">Facebook 詳細</a>
+  </nav>
+
   <!-- GLOSSARY -->
-  <div class="section">
+  <div class="section" id="glossary">
     <div class="section-title">用語解説</div>
     <div class="card">
       <dl class="glossary" style="font-size:13px;">
@@ -215,7 +425,7 @@
   </div>
 
   <!-- TOTAL SUMMARY -->
-  <div class="section">
+  <div class="section" id="summary">
     <div class="section-title">全体サマリー</div>
     <div class="card">
 
@@ -247,6 +457,92 @@
           <div class="label">4月 合計投稿数</div>
           <div class="value" style="color:var(--primary);">30</div>
           <div class="change">X: 12 / IG: 9 / FB: 9</div>
+        </div>
+      </div>
+
+      <!-- TOP 3 HIGHLIGHT CARDS -->
+      <h3 class="sub-title" id="highlights">4月のトップ投稿（3プラットフォーム横断）</h3>
+      <div class="highlight-grid">
+        <div class="highlight-card" data-rank="1">
+          <span class="hc-medal gold">🥇 最高インプレッション</span>
+          <span class="hc-platform x">X</span>
+          <div class="hc-metric">インプレッション数</div>
+          <div class="hc-value">41,106<span class="unit">imp</span></div>
+          <div class="hc-text">「自民党が信頼できる政党であってほしい」ガバナンス委員会の取組み</div>
+          <div class="hc-date">4/18 投稿</div>
+        </div>
+        <div class="highlight-card" data-rank="2">
+          <span class="hc-medal gold">🥇 最高エンゲージメント</span>
+          <span class="hc-platform x">X</span>
+          <div class="hc-metric">エンゲージメント数</div>
+          <div class="hc-value">489<span class="unit">EG</span></div>
+          <div class="hc-text">天皇皇后両陛下・愛子さまの被災地ご訪問</div>
+          <div class="hc-date">4/8 投稿</div>
+        </div>
+        <div class="highlight-card" data-rank="3">
+          <span class="hc-medal gold">🥇 最高リーチ</span>
+          <span class="hc-platform fb">FB</span>
+          <div class="hc-metric">リーチ</div>
+          <div class="hc-value">21,699<span class="unit">人</span></div>
+          <div class="hc-text">東京駅の自動コーヒー販売機（imp 23,117／クリック1,339）</div>
+          <div class="hc-date">4/3 投稿</div>
+        </div>
+      </div>
+
+      <!-- CROSS-PLATFORM WINNER -->
+      <h3 class="sub-title" id="compare">プラットフォーム別ベストパフォーマー</h3>
+      <div class="cpc-grid">
+        <div class="cpc-card">
+          <div class="cpc-title">投稿あたり平均imp</div>
+          <div class="cpc-winner ig">Instagram</div>
+          <div class="cpc-val">11,558</div>
+        </div>
+        <div class="cpc-card">
+          <div class="cpc-title">エンゲージメント率</div>
+          <div class="cpc-winner fb">Facebook</div>
+          <div class="cpc-val">3.75%</div>
+        </div>
+        <div class="cpc-card">
+          <div class="cpc-title">新規フォロー獲得</div>
+          <div class="cpc-winner ig">Instagram</div>
+          <div class="cpc-val">+117</div>
+        </div>
+        <div class="cpc-card">
+          <div class="cpc-title">フォロワー規模</div>
+          <div class="cpc-winner ig">Instagram</div>
+          <div class="cpc-val">4,591</div>
+        </div>
+      </div>
+
+      <!-- PLATFORM COMPARISON CHART -->
+      <div class="chart-grid-2">
+        <div class="chart-wrap">
+          <h4>プラットフォーム別 インプレッション・エンゲージメント比較</h4>
+          <div class="chart-box"><canvas id="chartPlatformCompare"></canvas></div>
+        </div>
+        <div class="chart-wrap">
+          <h4>プラットフォーム別 ポジショニング（レーダー）</h4>
+          <div class="chart-box"><canvas id="chartPlatformRadar"></canvas></div>
+        </div>
+      </div>
+
+      <!-- FOLLOWER KPI BARS -->
+      <h3 class="sub-title">フォロワー構成比（全11,084人中）</h3>
+      <div class="kpi-row">
+        <div class="kpi-item">
+          <div class="kpi-head"><span class="kpi-name">Instagram</span><span class="kpi-val">4,591<span class="unit"> 人（41.4%）</span></span></div>
+          <div class="kpi-bar"><div class="kpi-fill ig-fill" style="width:41.4%"></div></div>
+          <div class="kpi-note">4月新規 +117人（最も成長率が高い）</div>
+        </div>
+        <div class="kpi-item">
+          <div class="kpi-head"><span class="kpi-name">X (Twitter)</span><span class="kpi-val">4,038<span class="unit"> 人（36.4%）</span></span></div>
+          <div class="kpi-bar"><div class="kpi-fill x-fill" style="width:36.4%"></div></div>
+          <div class="kpi-note">政治系の拡散力が強い。バズポスト1本で全体imp上昇</div>
+        </div>
+        <div class="kpi-item">
+          <div class="kpi-head"><span class="kpi-name">Facebook</span><span class="kpi-val">2,455<span class="unit"> 人（22.2%）</span></span></div>
+          <div class="kpi-bar"><div class="kpi-fill fb-fill" style="width:22.2%"></div></div>
+          <div class="kpi-note">4月新規 +36人。規模小だがEG率3.75%と最厚コミュニティ</div>
         </div>
       </div>
 
@@ -312,7 +608,7 @@
   </div>
 
   <!-- ===== X SECTION ===== -->
-  <div class="section">
+  <div class="section" id="x-section">
     <div class="section-title">
       <span class="platform-icon x-icon">X</span>
       X（Twitter）月別推移レポート
@@ -343,7 +639,19 @@
         </div>
       </div>
 
-      <h3 class="sub-title">2. 投稿別パフォーマンス</h3>
+      <!-- X DAILY IMPRESSION BAR CHART -->
+      <div class="chart-wrap">
+        <h4>2. 投稿別 インプレッション比較（上位12投稿）</h4>
+        <div class="chart-box tall"><canvas id="chartXposts"></canvas></div>
+      </div>
+
+      <!-- X ENGAGEMENT BREAKDOWN DONUT -->
+      <div class="chart-wrap">
+        <h4>3. エンゲージメント内訳（いいね/リポスト/返信/ブックマーク）</h4>
+        <div class="chart-box"><canvas id="chartXengBreak"></canvas></div>
+      </div>
+
+      <h3 class="sub-title">4. 投稿別パフォーマンス（詳細テーブル）</h3>
       <div style="overflow-x:auto;">
         <table>
           <thead>
@@ -544,7 +852,7 @@
   </div>
 
   <!-- ===== INSTAGRAM SECTION ===== -->
-  <div class="section">
+  <div class="section" id="ig-section">
     <div class="section-title">
       <span class="platform-icon ig-icon">IG</span>
       Instagram 月次レポート
@@ -588,7 +896,25 @@
         </div>
       </div>
 
-      <h3 class="sub-title">2. 日別推移（4/1〜4/18）</h3>
+      <!-- IG DAILY LINE CHART -->
+      <div class="chart-wrap">
+        <h4>2. 日別推移 インプレッション・リーチ（4/1〜4/18）</h4>
+        <div class="chart-box tall"><canvas id="chartIgDaily"></canvas></div>
+      </div>
+
+      <!-- IG FOLLOWER GROWTH CHART + POST TYPE DONUT -->
+      <div class="chart-grid-2">
+        <div class="chart-wrap">
+          <h4>日別 新規フォロワー獲得</h4>
+          <div class="chart-box"><canvas id="chartIgFollower"></canvas></div>
+        </div>
+        <div class="chart-wrap">
+          <h4>投稿タイプ別 リーチ（リール/カルーセル/画像）</h4>
+          <div class="chart-box"><canvas id="chartIgType"></canvas></div>
+        </div>
+      </div>
+
+      <h3 class="sub-title">3. 日別推移（詳細テーブル）</h3>
       <div class="daily-table-wrap">
         <table class="daily-table">
           <thead>
@@ -636,7 +962,13 @@
         </table>
       </div>
 
-      <h3 class="sub-title">3. 投稿別パフォーマンス</h3>
+      <!-- IG POSTS REACH BAR CHART -->
+      <div class="chart-wrap">
+        <h4>4. 投稿別 リーチ比較</h4>
+        <div class="chart-box"><canvas id="chartIgPosts"></canvas></div>
+      </div>
+
+      <h3 class="sub-title">5. 投稿別パフォーマンス（詳細テーブル）</h3>
       <div style="overflow-x:auto;">
         <table>
           <thead>
@@ -795,7 +1127,7 @@
   </div>
 
   <!-- ===== FACEBOOK SECTION ===== -->
-  <div class="section">
+  <div class="section" id="fb-section">
     <div class="section-title">
       <span class="platform-icon fb-icon">f</span>
       Facebook 月次レポート
@@ -838,7 +1170,25 @@
         </div>
       </div>
 
-      <h3 class="sub-title">2. 日別推移（4/1〜4/18）</h3>
+      <!-- FB DAILY LINE CHART -->
+      <div class="chart-wrap">
+        <h4>2. 日別推移 インプレッション・リーチ（4/1〜4/18）</h4>
+        <div class="chart-box tall"><canvas id="chartFbDaily"></canvas></div>
+      </div>
+
+      <!-- FB ENGAGEMENT DAILY + CLICKS -->
+      <div class="chart-grid-2">
+        <div class="chart-wrap">
+          <h4>日別 エンゲージメント＆リンククリック</h4>
+          <div class="chart-box"><canvas id="chartFbEng"></canvas></div>
+        </div>
+        <div class="chart-wrap">
+          <h4>日別 プロフィールアクセス</h4>
+          <div class="chart-box"><canvas id="chartFbAccess"></canvas></div>
+        </div>
+      </div>
+
+      <h3 class="sub-title">3. 日別推移（詳細テーブル）</h3>
       <div class="daily-table-wrap">
         <table class="daily-table">
           <thead>
@@ -886,7 +1236,13 @@
         </table>
       </div>
 
-      <h3 class="sub-title">3. 投稿別パフォーマンス</h3>
+      <!-- FB POSTS IMPRESSION BAR CHART -->
+      <div class="chart-wrap">
+        <h4>4. 投稿別 インプレッション比較</h4>
+        <div class="chart-box"><canvas id="chartFbPosts"></canvas></div>
+      </div>
+
+      <h3 class="sub-title">5. 投稿別パフォーマンス（詳細テーブル）</h3>
       <div style="overflow-x:auto;">
         <table>
           <thead>
@@ -1042,6 +1398,249 @@
   </div>
 
 </div>
+
+<script>
+(function(){
+  if (typeof Chart === 'undefined') { console.warn('Chart.js not loaded'); return; }
+  Chart.defaults.font.family = "'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif";
+  Chart.defaults.font.size = 12;
+  Chart.defaults.color = '#2c3e50';
+
+  const C_X = '#000000', C_IG = '#E1306C', C_FB = '#1877F2', C_ACCENT = '#e67e22', C_GREEN = '#27ae60';
+
+  // ========== PLATFORM COMPARE (grouped bar) ==========
+  new Chart(document.getElementById('chartPlatformCompare'), {
+    type: 'bar',
+    data: {
+      labels: ['X', 'Instagram', 'Facebook'],
+      datasets: [
+        { label: 'インプレッション数', data: [88653, 104018, 60705], backgroundColor: ['#000','#E1306C','#1877F2'], yAxisID: 'y' },
+        { label: 'エンゲージメント数', data: [1987, 2711, 2276], backgroundColor: ['rgba(0,0,0,0.35)','rgba(225,48,108,0.35)','rgba(24,119,242,0.35)'], yAxisID: 'y1' }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom' } },
+      scales: {
+        y: { type: 'linear', position: 'left', title: { display: true, text: 'imp数' }, beginAtZero: true },
+        y1: { type: 'linear', position: 'right', title: { display: true, text: 'EG数' }, beginAtZero: true, grid: { drawOnChartArea: false } }
+      }
+    }
+  });
+
+  // ========== PLATFORM RADAR ==========
+  // Normalized to 100 scale for radar
+  new Chart(document.getElementById('chartPlatformRadar'), {
+    type: 'radar',
+    data: {
+      labels: ['リーチ力\n(imp)', '反応率\n(EG率)', 'フォロワー\n規模', '成長力\n(新規獲得)', '投稿効率\n(imp/投稿)'],
+      datasets: [
+        { label: 'X', data: [85, 60, 82, 30, 60], borderColor: C_X, backgroundColor: 'rgba(0,0,0,0.12)', pointBackgroundColor: C_X },
+        { label: 'Instagram', data: [100, 70, 100, 100, 100], borderColor: C_IG, backgroundColor: 'rgba(225,48,108,0.15)', pointBackgroundColor: C_IG },
+        { label: 'Facebook', data: [58, 100, 50, 30, 58], borderColor: C_FB, backgroundColor: 'rgba(24,119,242,0.12)', pointBackgroundColor: C_FB }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom' } },
+      scales: { r: { beginAtZero: true, max: 100, ticks: { stepSize: 25, display: false } } }
+    }
+  });
+
+  // ========== X POSTS BAR ==========
+  const xPosts = [
+    { label: '4/18 ガバナンス委員会', imp: 41106, eg: 430 },
+    { label: '4/3 コーヒー販売機', imp: 11462, eg: 274 },
+    { label: '4/2 原油備蓄', imp: 10933, eg: 253 },
+    { label: '4/8 天皇皇后両陛下', imp: 10314, eg: 489 },
+    { label: '4/8 クマ目撃', imp: 6576, eg: 116 },
+    { label: '4/10 FSG入学式', imp: 1665, eg: 61 },
+    { label: '4/7 小泉大臣', imp: 1535, eg: 48 },
+    { label: '4/16 国会見学', imp: 1411, eg: 75 },
+    { label: '4/9 ねもトーク告知', imp: 997, eg: 64 },
+    { label: '4/14 桜見頃', imp: 976, eg: 73 },
+    { label: '4/15 イラン支援', imp: 918, eg: 41 },
+    { label: '4/19 桜まつり', imp: 760, eg: 63 }
+  ];
+  new Chart(document.getElementById('chartXposts'), {
+    type: 'bar',
+    data: {
+      labels: xPosts.map(p => p.label),
+      datasets: [
+        { label: 'インプレッション', data: xPosts.map(p => p.imp), backgroundColor: C_X, borderRadius: 4 },
+        { label: 'エンゲージメント', data: xPosts.map(p => p.eg), backgroundColor: C_ACCENT, borderRadius: 4 }
+      ]
+    },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom' } },
+      scales: { x: { type: 'logarithmic', title: { display: true, text: '対数スケール' } } }
+    }
+  });
+
+  // ========== X ENG BREAKDOWN DONUT ==========
+  new Chart(document.getElementById('chartXengBreak'), {
+    type: 'doughnut',
+    data: {
+      labels: ['いいね', 'リポスト', '返信', 'ブックマーク'],
+      datasets: [{ data: [1532, 318, 87, 50], backgroundColor: ['#e67e22','#27ae60','#3498db','#9b59b6'], borderWidth: 2, borderColor: '#fff' }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' } } }
+  });
+
+  // ========== IG DAILY LINE ==========
+  const igLabels = ['4/1','4/2','4/3','4/4','4/5','4/6','4/7','4/8','4/9','4/10','4/11','4/12','4/13','4/14','4/15','4/16','4/17','4/18'];
+  new Chart(document.getElementById('chartIgDaily'), {
+    type: 'line',
+    data: {
+      labels: igLabels,
+      datasets: [
+        { label: 'インプレッション', data: [8797,7546,9863,8001,4769,3119,1822,1657,4135,7602,4361,1628,3649,7673,4638,12821,6664,5273], borderColor: C_IG, backgroundColor: 'rgba(225,48,108,0.15)', fill: true, tension: 0.3, pointRadius: 3 },
+        { label: 'リーチ', data: [4980,4135,3847,3304,2470,1770,1058,875,2030,3827,1985,791,1619,3439,2304,7346,2839,2316], borderColor: '#833AB4', backgroundColor: 'rgba(131,58,180,0.10)', fill: true, tension: 0.3, pointRadius: 3 },
+        { label: 'エンゲージメント', data: [185,137,319,88,79,45,31,36,139,228,139,29,186,231,106,448,164,121], borderColor: C_ACCENT, backgroundColor: 'transparent', fill: false, tension: 0.3, pointRadius: 3, yAxisID: 'y1' }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom' } },
+      scales: {
+        y: { title: { display: true, text: 'imp/リーチ' }, beginAtZero: true },
+        y1: { type: 'linear', position: 'right', title: { display: true, text: 'EG' }, beginAtZero: true, grid: { drawOnChartArea: false } }
+      }
+    }
+  });
+
+  // ========== IG FOLLOWER GROWTH ==========
+  new Chart(document.getElementById('chartIgFollower'), {
+    type: 'bar',
+    data: {
+      labels: igLabels,
+      datasets: [{ label: '新規フォロワー', data: [7,8,6,3,1,3,4,5,0,22,9,3,2,4,2,23,12,3], backgroundColor: C_IG, borderRadius: 4 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true, title: { display: true, text: '人数' } } }
+    }
+  });
+
+  // ========== IG POST TYPE DONUT (Reach by type) ==========
+  // Reel: 4/16 国会見学 9402 + 4/10 FSG 3982 = 13384
+  // Carousel: 4/14 桜 5680 + 4/3 コーヒー 4135 + 4/18 ガバナンス 1985 = 11800
+  // Image: 4/2 原油 5454 + 4/9 ねもトーク 3402 + 4/15 イラン 1784 = 10640
+  new Chart(document.getElementById('chartIgType'), {
+    type: 'doughnut',
+    data: {
+      labels: ['リール (2投稿)', 'カルーセル (3投稿)', '画像 (3投稿)'],
+      datasets: [{ data: [13384, 11800, 10640], backgroundColor: ['#E1306C','#F77737','#833AB4'], borderWidth: 2, borderColor: '#fff' }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+  });
+
+  // ========== IG POSTS BAR (Reach) ==========
+  const igPosts = [
+    { label: '4/16 国会見学(リール)', v: 9402 },
+    { label: '4/14 桜見頃(カルーセル)', v: 5680 },
+    { label: '4/2 原油備蓄(画像)', v: 5454 },
+    { label: '4/3 コーヒー(カルーセル)', v: 4135 },
+    { label: '4/10 FSG(リール)', v: 3982 },
+    { label: '4/9 ねもトーク(画像)', v: 3402 },
+    { label: '4/18 ガバナンス(カルーセル)', v: 1985 },
+    { label: '4/15 イラン(画像)', v: 1784 }
+  ];
+  new Chart(document.getElementById('chartIgPosts'), {
+    type: 'bar',
+    data: {
+      labels: igPosts.map(p => p.label),
+      datasets: [{ label: 'リーチ', data: igPosts.map(p => p.v), backgroundColor: C_IG, borderRadius: 4 }]
+    },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { x: { beginAtZero: true } }
+    }
+  });
+
+  // ========== FB DAILY LINE ==========
+  const fbLabels = igLabels;
+  new Chart(document.getElementById('chartFbDaily'), {
+    type: 'line',
+    data: {
+      labels: fbLabels,
+      datasets: [
+        { label: 'インプレッション', data: [6453,1027,548,7892,5151,3380,2727,2517,3577,3960,2471,1444,2459,3709,3042,3874,3064,3410], borderColor: C_FB, backgroundColor: 'rgba(24,119,242,0.15)', fill: true, tension: 0.3, pointRadius: 3 },
+        { label: 'リーチ', data: [3982,3380,6605,4776,3262,2320,1691,1478,2335,2635,1619,904,1220,2070,1768,2592,1912,2163], borderColor: '#42A5F5', backgroundColor: 'rgba(66,165,245,0.10)', fill: true, tension: 0.3, pointRadius: 3 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom' } },
+      scales: { y: { beginAtZero: true, title: { display: true, text: '数値' } } }
+    }
+  });
+
+  // ========== FB DAILY ENG + CLICK ==========
+  new Chart(document.getElementById('chartFbEng'), {
+    type: 'bar',
+    data: {
+      labels: fbLabels,
+      datasets: [
+        { label: 'エンゲージメント', data: [196,176,344,139,65,39,34,33,99,152,64,35,115,218,101,176,133,157], backgroundColor: C_FB, borderRadius: 3 },
+        { label: 'リンククリック', data: [0,2,1,1,0,1,0,0,6,4,7,1,0,1,2,0,1,0], backgroundColor: C_ACCENT, borderRadius: 3, yAxisID: 'y1' }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom' } },
+      scales: {
+        y: { beginAtZero: true, title: { display: true, text: 'EG' } },
+        y1: { type: 'linear', position: 'right', beginAtZero: true, title: { display: true, text: 'クリック' }, grid: { drawOnChartArea: false } }
+      }
+    }
+  });
+
+  // ========== FB ACCESS ==========
+  new Chart(document.getElementById('chartFbAccess'), {
+    type: 'line',
+    data: {
+      labels: fbLabels,
+      datasets: [{ label: 'プロフィールアクセス', data: [134,196,227,235,126,107,169,148,129,192,135,112,151,190,225,220,102,130], borderColor: C_GREEN, backgroundColor: 'rgba(39,174,96,0.15)', fill: true, tension: 0.3, pointRadius: 3 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom' } },
+      scales: { y: { beginAtZero: true } }
+    }
+  });
+
+  // ========== FB POSTS BAR ==========
+  const fbPosts = [
+    { label: '4/3 コーヒー販売機', imp: 23117, cl: 1339 },
+    { label: '4/1 原油備蓄', imp: 5490, cl: 316 },
+    { label: '4/18 ガバナンス', imp: 3936, cl: 304 },
+    { label: '4/14 桜見頃', imp: 3778, cl: 295 },
+    { label: '4/16 国会見学(動画)', imp: 3703, cl: 178 },
+    { label: '4/15 イラン支援', imp: 2898, cl: 59 },
+    { label: '4/9 ねもトーク告知', imp: 2661, cl: 85 },
+    { label: '4/10 FSG入学式(動画)', imp: 2558, cl: 53 }
+  ];
+  new Chart(document.getElementById('chartFbPosts'), {
+    type: 'bar',
+    data: {
+      labels: fbPosts.map(p => p.label),
+      datasets: [
+        { label: 'インプレッション', data: fbPosts.map(p => p.imp), backgroundColor: C_FB, borderRadius: 4 },
+        { label: 'リンククリック', data: fbPosts.map(p => p.cl), backgroundColor: C_ACCENT, borderRadius: 4 }
+      ]
+    },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom' } },
+      scales: { x: { beginAtZero: true } }
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
