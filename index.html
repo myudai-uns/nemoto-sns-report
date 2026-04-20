@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>根本拓事務所 SNS運用月次レポート 2026年4月度</title>
+<style>
+  :root {
+    --primary: #1a1a2e;
+    --accent: #e67e22;
+    --accent2: #27ae60;
+    --bg: #f5f5f5;
+    --card: #ffffff;
+    --text: #2c3e50;
+    --text-light: #7f8c8d;
+    --border: #ecf0f1;
+    --up: #27ae60;
+    --down: #e74c3c;
+    --x-color: #000000;
+    --ig-color: #E1306C;
+    --fb-color: #1877F2;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+
+  /* Cover */
+  .cover {
+    background: linear-gradient(135deg, var(--primary) 0%, #16213e 100%);
+    color: #fff;
+    padding: 60px 40px;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  .cover h1 { font-size: 14px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; opacity: 0.7; }
+  .cover h2 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+  .cover .date { font-size: 18px; color: var(--accent); font-weight: 600; }
+  .cover .note { font-size: 12px; margin-top: 15px; opacity: 0.6; }
+
+  /* Section */
+  .section { margin-bottom: 30px; }
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    padding: 12px 20px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .platform-icon {
+    width: 28px; height: 28px; border-radius: 6px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px; color: #fff;
+  }
+  .section-title .x-icon { background: var(--x-color); }
+  .section-title .ig-icon { background: var(--ig-color); }
+  .section-title .fb-icon { background: var(--fb-color); }
+
+  .card {
+    background: var(--card);
+    border-radius: 0 0 10px 10px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  /* Summary cards */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+  .stat-card .label { font-size: 12px; color: var(--text-light); margin-bottom: 4px; }
+  .stat-card .value { font-size: 28px; font-weight: 700; }
+  .stat-card .change { font-size: 12px; margin-top: 4px; }
+  .stat-card .change.up { color: var(--up); }
+  .stat-card .change.down { color: var(--down); }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    background: var(--primary);
+    color: #fff;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:hover td { background: #f9f9fb; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .post-text { max-width: 400px; font-size: 12px; line-height: 1.5; color: #555; }
+  .post-link { font-size: 11px; color: var(--accent); text-decoration: none; }
+  .post-link:hover { text-decoration: underline; }
+
+  /* Highlight row */
+  tr.top-post td { background: #fef9e7; }
+
+  /* Glossary */
+  .glossary { font-size: 12px; color: var(--text-light); margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border); }
+  .glossary dt { font-weight: 600; color: var(--text); display: inline; }
+  .glossary dd { display: inline; margin-left: 4px; margin-right: 16px; }
+
+  /* Analysis box */
+  .analysis {
+    background: linear-gradient(135deg, #fef9e7 0%, #fdf2e9 100%);
+    border-left: 4px solid var(--accent);
+    padding: 16px 20px;
+    border-radius: 0 8px 8px 0;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+  .analysis h4 { color: var(--accent); margin-bottom: 8px; font-size: 14px; }
+  .analysis ul { padding-left: 20px; }
+  .analysis li { margin-bottom: 4px; }
+
+  /* Daily chart placeholder */
+  .daily-table-wrap { overflow-x: auto; }
+  .daily-table { font-size: 11px; }
+  .daily-table th, .daily-table td { padding: 6px 8px; text-align: right; white-space: nowrap; }
+  .daily-table th:first-child, .daily-table td:first-child { text-align: left; }
+
+  /* Bar visualization */
+  .bar-cell { position: relative; }
+  .bar-bg { position: absolute; left: 0; top: 0; bottom: 0; background: rgba(230,126,34,0.12); border-radius: 3px; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 11px;
+    color: var(--text-light);
+  }
+
+  /* Subsection title */
+  .sub-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--accent);
+    color: var(--primary);
+  }
+
+  /* Platform total row */
+  .platform-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .platform-card {
+    border-radius: 10px;
+    padding: 20px;
+    color: #fff;
+    text-align: center;
+  }
+  .platform-card.x-bg { background: linear-gradient(135deg, #000 0%, #333 100%); }
+  .platform-card.ig-bg { background: linear-gradient(135deg, #833AB4 0%, #E1306C 50%, #F77737 100%); }
+  .platform-card.fb-bg { background: linear-gradient(135deg, #1877F2 0%, #42A5F5 100%); }
+  .platform-card .p-name { font-size: 14px; font-weight: 600; margin-bottom: 8px; opacity: 0.9; }
+  .platform-card .p-followers { font-size: 32px; font-weight: 700; }
+  .platform-card .p-label { font-size: 11px; opacity: 0.7; }
+
+  @media print {
+    body { background: #fff; }
+    .cover { break-after: page; }
+    .section { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- COVER -->
+  <div class="cover">
+    <h1>根本拓事務所御中</h1>
+    <h2>SNS運用月次レポート</h2>
+    <div class="date">2026年4月度</div>
+    <div class="note">集計期間: 2026年4月1日 〜 4月19日（暫定）</div>
+  </div>
+
+  <!-- GLOSSARY -->
+  <div class="section">
+    <div class="section-title">用語解説</div>
+    <div class="card">
+      <dl class="glossary" style="font-size:13px;">
+        <dt>インプレッション数</dt><dd>SNS投稿がユーザーの画面に表示された回数。</dd><br>
+        <dt>リーチ</dt><dd>SNS投稿が表示されたユーザーの人数（ユニーク数）。</dd><br>
+        <dt>エンゲージメント数</dt><dd>ユーザーがSNS投稿に対して行動を起こした数（いいね・シェア・コメント・保存・リポスト）。</dd><br>
+        <dt>エンゲージメント率</dt><dd>エンゲージメント数 &divide; インプレッション数。投稿への反応度合いを示す指標。</dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- TOTAL SUMMARY -->
+  <div class="section">
+    <div class="section-title">全体サマリー</div>
+    <div class="card">
+
+      <div class="platform-summary">
+        <div class="platform-card x-bg">
+          <div class="p-name">X (Twitter)</div>
+          <div class="p-followers">4,038</div>
+          <div class="p-label">フォロワー</div>
+        </div>
+        <div class="platform-card ig-bg">
+          <div class="p-name">Instagram</div>
+          <div class="p-followers">4,591</div>
+          <div class="p-label">フォロワー</div>
+        </div>
+        <div class="platform-card fb-bg">
+          <div class="p-name">Facebook</div>
+          <div class="p-followers">2,455</div>
+          <div class="p-label">フォロワー</div>
+        </div>
+      </div>
+
+      <h3 class="sub-title">合計フォロワー数</h3>
+      <div class="summary-grid">
+        <div class="stat-card">
+          <div class="label">合計フォロワー数</div>
+          <div class="value">11,084</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">4月 合計投稿数</div>
+          <div class="value" style="color:var(--primary);">30</div>
+          <div class="change">X: 12 / IG: 9 / FB: 9</div>
+        </div>
+      </div>
+
+      <h3 class="sub-title">プラットフォーム別 4月実績</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>プラットフォーム</th>
+            <th style="text-align:right;">投稿数</th>
+            <th style="text-align:right;">フォロワー数</th>
+            <th style="text-align:right;">インプレッション数</th>
+            <th style="text-align:right;">エンゲージメント数</th>
+            <th style="text-align:right;">エンゲージメント率</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>X</strong></td>
+            <td class="num">12</td>
+            <td class="num">4,038</td>
+            <td class="num">88,653</td>
+            <td class="num">1,987</td>
+            <td class="num">2.24%</td>
+          </tr>
+          <tr>
+            <td><strong>Instagram</strong></td>
+            <td class="num">9</td>
+            <td class="num">4,591</td>
+            <td class="num">104,018</td>
+            <td class="num">2,711</td>
+            <td class="num">2.61%</td>
+          </tr>
+          <tr>
+            <td><strong>Facebook</strong></td>
+            <td class="num">9</td>
+            <td class="num">2,455</td>
+            <td class="num">60,705</td>
+            <td class="num">2,276</td>
+            <td class="num">3.75%</td>
+          </tr>
+          <tr style="font-weight:700; background:#f0f0f5;">
+            <td>合計</td>
+            <td class="num">30</td>
+            <td class="num">11,084</td>
+            <td class="num">253,376</td>
+            <td class="num">6,974</td>
+            <td class="num">2.75%</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="analysis">
+        <h4>4月度の総括</h4>
+        <ul>
+          <li><strong>天皇皇后両陛下の被災地訪問</strong>投稿（4/8）が全プラットフォームで最大のエンゲージメントを記録。時事性＋地元感情に響くテーマが高い共感を呼んだ。</li>
+          <li><strong>自民党ガバナンス委員会</strong>投稿（4/18）はXで41,106impと最高インプレッション。政治テーマでも具体的な「信頼回復」への取組みという切り口が拡散力を持った。</li>
+          <li><strong>自動コーヒー販売機</strong>・<strong>原油備蓄</strong>の投稿は、身近な話題×政策解説の構成でいずれも1万imp超。日常の気づきから政策につなげるスタイルが安定的に効果を発揮。</li>
+          <li>Instagramはフォロワー4,591人と前月比で着実に成長。フォロワー増加率はIG（4月新規117人）が最も高い。</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== X SECTION ===== -->
+  <div class="section">
+    <div class="section-title">
+      <span class="platform-icon x-icon">X</span>
+      X（Twitter）月別推移レポート
+    </div>
+    <div class="card">
+
+      <h3 class="sub-title">1. アカウントサマリー</h3>
+      <div class="summary-grid">
+        <div class="stat-card">
+          <div class="label">フォロワー数</div>
+          <div class="value">4,038</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">投稿数</div>
+          <div class="value">12</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">インプレッション数</div>
+          <div class="value">88,653</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">エンゲージメント数</div>
+          <div class="value">1,987</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">エンゲージメント率</div>
+          <div class="value" style="color:var(--accent);">2.24%</div>
+        </div>
+      </div>
+
+      <h3 class="sub-title">2. 投稿別パフォーマンス</h3>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>日付</th>
+              <th>投稿内容</th>
+              <th style="text-align:right;">imp数</th>
+              <th style="text-align:right;">いいね</th>
+              <th style="text-align:right;">リポスト</th>
+              <th style="text-align:right;">返信</th>
+              <th style="text-align:right;">ブックマーク</th>
+              <th style="text-align:right;">EG計</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="top-post">
+              <td>4/18</td>
+              <td>
+                <div class="post-text">「自民党が信頼できる政党であってほしい」自民党ガバナンス委員会の委員として…</div>
+                <a class="post-link" href="https://x.com/taku_nemoto_/status/2045342131305558235" target="_blank">投稿を見る</a>
+              </td>
+              <td class="num"><strong>41,106</strong></td>
+              <td class="num">275</td>
+              <td class="num">84</td>
+              <td class="num">60</td>
+              <td class="num">11</td>
+              <td class="num"><strong>430</strong></td>
+            </tr>
+            <tr class="top-post">
+              <td>4/3</td>
+              <td>
+                <div class="post-text">「こんな自動販売機があるなんてすごい！」東京駅のホームで外国人観光客の方が驚いた…</div>
+                <a class="post-link" href="https://x.com/taku_nemoto_/status/2039991302687715812" target="_blank">投稿を見る</a>
+              </td>
+              <td class="num"><strong>11,462</strong></td>
+              <td class="num">224</td>
+              <td class="num">42</td>
+              <td class="num">4</td>
+              <td class="num">4</td>
+              <td class="num"><strong>274</strong></td>
+            </tr>
+            <tr class="top-post">
+              <td>4/2</td>
+              <td>
+                <div class="post-text">「原油備蓄を放出したらガソリン価格は下がるの？」地元での対話集会でいただいた質問…</div>
+                <a class="post-link" href="https://x.com/taku_nemoto_/status/2039508113032970516" target="_blank">投稿を見る</a>
+              </td>
+              <td class="num"><strong>10,933</strong></td>
+              <td class="num">159</td>
+              <td class="num">71</td>
+              <td class="num">6</td>
+              <td class="num">17</td>
+              <td class="num"><strong>253</strong></td>
+            </tr>
+            <tr>
+              <td>4/8</td>
+              <td>
+                <div class="post-text">天皇皇后両陛下、愛子さまが2日間にわたり、被災地の「今」をご覧くださいました…</div>
+                <a class="post-link" href="https://x.com/taku_nemoto_/status/2041738808165830878" target="_blank">投稿を見る</a>
+              </td>
+              <td class="num">10,314</td>
+              <td class="num">426</td>
+              <td class="num">55</td>
+              <td class="num">3</td>
+              <td class="num">5</td>
+              <td class="num"><strong>489</strong></td>
+            </tr>
+            <tr>
+              <td>4/8</td>
+              <td>
+                <div class="post-text">郡山市街地で、一昨日からクマが目撃されています。最新の目撃情報については…</div>
+                <a class="post-link" href="https://x.com/taku_nemoto_/status/2041723135557570943" target="_blank">投稿を見る</a>
+              </td>
+              <td class="num">6,576</td>
+              <td class="num">90</td>
+              <td class="num">15</td>
+              <td class="num">6</td>
+              <td class="num">5</td>
+              <td class="num">116</td>
+            </tr>
+            <tr>
+              <td>4/10</td>
+              <td>
+                <div class="post-text">【この春にご入学された皆さんへ】FSGカレッジリーグの入学式でお祝いのメッセージ…</div>
+                <a class="post-link" href="https://x.com/taku_nemoto_/status/2042528013045371169" target="_blank">投稿を見る</a>
+              </td>
+              <td class="num">1,665</td>
+              <td class="num">51</td>
+              <td class="num">7</td>
+              <td class="num">2</td>
+              <td class="num">1</td>
+              <td class="num">61</td>
+            </tr>
+            <tr>
+              <td>4/7</td>
+              <td>
+                <div class="post-text">小泉大臣、全国の自民党青年局の皆さんから事前予告なく来る鋭い質問に…</div>
+                <a class="post-link" href="https://x.com/taku_nemoto_/status/2041335338120179743" target="_blank">投稿を見る</a>
+              </td>
+              <td class="num">1,535</td>
+              <td class="num">42</td>
+              <td class="num">5</td>
+              <td class="num">1</td>
+              <td class="num">0</td>
+              <td class="num">48</td>
+            </tr>
+            <tr>
+              <td>4/16</td>
+              <td>
+                <div class="post-text">修学旅行シーズンを迎え、地元の中学生たちが国会見学に来てくれています…</div>
+                <a class="post-link" href="https://x.com/taku_nemoto_/status/2044717436335989145" target="_blank">投稿を見る</a>
+              </td>
+              <td class="num">1,411</td>
+              <td class="num">64</td>
+              <td class="num">7</td>
+              <td class="num">2</td>
+              <td class="num">2</td>
+              <td class="num">75</td>
+            </tr>
+            <tr>
+              <td>4/9</td>
+              <td>
+                <div class="post-text">【ねもトーク配信のお知らせ】新年度最初の「ねもトーク」を開催します！…</div>
+                <a class="post-link" href="https://x.com/taku_nemoto_/status/2042165626358415582" target="_blank">投稿を見る</a>
+              </td>
+              <td class="num">997</td>
+              <td class="num">53</td>
+              <td class="num">9</td>
+              <td class="num">0</td>
+              <td class="num">2</td>
+              <td class="num">64</td>
+            </tr>
+            <tr>
+              <td>4/14</td>
+              <td>
+                <div class="post-text">今週末、福島各地で桜が見頃を迎えました！満開の桜が本当に美しく…</div>
+                <a class="post-link" href="https://x.com/taku_nemoto_/status/2043885942902247569" target="_blank">投稿を見る</a>
+              </td>
+              <td class="num">976</td>
+              <td class="num">63</td>
+              <td class="num">7</td>
+              <td class="num">2</td>
+              <td class="num">1</td>
+              <td class="num">73</td>
+            </tr>
+            <tr>
+              <td>4/15</td>
+              <td>
+                <div class="post-text">イラン問題によって経営上の悪影響が出ている場合の支援策や相談先について…</div>
+                <a class="post-link" href="https://x.com/taku_nemoto_/status/2044243006489079845" target="_blank">投稿を見る</a>
+              </td>
+              <td class="num">918</td>
+              <td class="num">29</td>
+              <td class="num">10</td>
+              <td class="num">0</td>
+              <td class="num">2</td>
+              <td class="num">41</td>
+            </tr>
+            <tr>
+              <td>4/19</td>
+              <td>
+                <div class="post-text">藤田川桜まつり・笹原川千本桜まつりへお邪魔しました。川沿いの桜並木が…</div>
+                <a class="post-link" href="https://x.com/taku_nemoto_/status/2045789502740840835" target="_blank">投稿を見る</a>
+              </td>
+              <td class="num">760</td>
+              <td class="num">56</td>
+              <td class="num">6</td>
+              <td class="num">1</td>
+              <td class="num">0</td>
+              <td class="num">63</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr style="font-weight:700; background:#f0f0f5;">
+              <td colspan="2">合計（12投稿）</td>
+              <td class="num">88,653</td>
+              <td class="num">1,532</td>
+              <td class="num">318</td>
+              <td class="num">87</td>
+              <td class="num">50</td>
+              <td class="num">1,987</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div class="analysis">
+        <h4>X分析コメント</h4>
+        <ul>
+          <li><strong>最高EG投稿:</strong> 天皇皇后両陛下の被災地訪問（489EG / いいね426）。福島の復興への想いが共感を集めた。</li>
+          <li><strong>最高imp投稿:</strong> 自民党ガバナンス委員会（41,106imp）。政治的テーマだが具体的な行動提示が拡散につながった。返信60件と議論も活発。</li>
+          <li><strong>日常×政策が好調:</strong> コーヒー販売機（11,462imp）、原油備蓄（10,933imp）は身近な話題から政策解説へつなげる構成がいずれも1万imp超。ブックマーク17件（原油）は「あとで読みたい」という反応であり、信頼される情報発信として高評価。</li>
+          <li><strong>地元ネタは安定:</strong> クマ目撃（6,576imp）は地域密着の速報系で高リーチ。桜まつり系は投稿直後のため今後伸びる余地あり。</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== INSTAGRAM SECTION ===== -->
+  <div class="section">
+    <div class="section-title">
+      <span class="platform-icon ig-icon">IG</span>
+      Instagram 月次レポート
+    </div>
+    <div class="card">
+
+      <h3 class="sub-title">1. アカウントサマリー</h3>
+      <div class="summary-grid">
+        <div class="stat-card">
+          <div class="label">フォロワー数</div>
+          <div class="value">4,591</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">4月新規フォロー</div>
+          <div class="value" style="color:var(--up);">+117</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">投稿数</div>
+          <div class="value">9</div>
+          <div class="change">リール3 / カルーセル3 / 画像3</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">インプレッション数</div>
+          <div class="value">104,018</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">リーチ</div>
+          <div class="value">50,935</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">エンゲージメント数</div>
+          <div class="value">2,711</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">エンゲージメント率</div>
+          <div class="value" style="color:var(--accent);">2.61%</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">プロフィールアクセス</div>
+          <div class="value">2,957</div>
+        </div>
+      </div>
+
+      <h3 class="sub-title">2. 日別推移（4/1〜4/18）</h3>
+      <div class="daily-table-wrap">
+        <table class="daily-table">
+          <thead>
+            <tr>
+              <th>日付</th>
+              <th>インプ</th>
+              <th>リーチ</th>
+              <th>EG数</th>
+              <th>フォロー</th>
+              <th>アクセス</th>
+              <th>リンクC</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>4/1</td><td class="num">8,797</td><td class="num">4,980</td><td class="num">185</td><td class="num">7</td><td class="num">214</td><td class="num">0</td></tr>
+            <tr><td>4/2</td><td class="num">7,546</td><td class="num">4,135</td><td class="num">137</td><td class="num">8</td><td class="num">178</td><td class="num">0</td></tr>
+            <tr><td>4/3</td><td class="num">9,863</td><td class="num">3,847</td><td class="num">319</td><td class="num">6</td><td class="num">195</td><td class="num">0</td></tr>
+            <tr><td>4/4</td><td class="num">8,001</td><td class="num">3,304</td><td class="num">88</td><td class="num">3</td><td class="num">160</td><td class="num">0</td></tr>
+            <tr><td>4/5</td><td class="num">4,769</td><td class="num">2,470</td><td class="num">79</td><td class="num">1</td><td class="num">125</td><td class="num">0</td></tr>
+            <tr><td>4/6</td><td class="num">3,119</td><td class="num">1,770</td><td class="num">45</td><td class="num">3</td><td class="num">125</td><td class="num">0</td></tr>
+            <tr><td>4/7</td><td class="num">1,822</td><td class="num">1,058</td><td class="num">31</td><td class="num">4</td><td class="num">76</td><td class="num">0</td></tr>
+            <tr><td>4/8</td><td class="num">1,657</td><td class="num">875</td><td class="num">36</td><td class="num">5</td><td class="num">89</td><td class="num">0</td></tr>
+            <tr><td>4/9</td><td class="num">4,135</td><td class="num">2,030</td><td class="num">139</td><td class="num">0</td><td class="num">117</td><td class="num">0</td></tr>
+            <tr><td>4/10</td><td class="num">7,602</td><td class="num">3,827</td><td class="num">228</td><td class="num">22</td><td class="num">209</td><td class="num">4</td></tr>
+            <tr><td>4/11</td><td class="num">4,361</td><td class="num">1,985</td><td class="num">139</td><td class="num">9</td><td class="num">242</td><td class="num">8</td></tr>
+            <tr><td>4/12</td><td class="num">1,628</td><td class="num">791</td><td class="num">29</td><td class="num">3</td><td class="num">140</td><td class="num">0</td></tr>
+            <tr><td>4/13</td><td class="num">3,649</td><td class="num">1,619</td><td class="num">186</td><td class="num">2</td><td class="num">106</td><td class="num">0</td></tr>
+            <tr><td>4/14</td><td class="num">7,673</td><td class="num">3,439</td><td class="num">231</td><td class="num">4</td><td class="num">134</td><td class="num">0</td></tr>
+            <tr><td>4/15</td><td class="num">4,638</td><td class="num">2,304</td><td class="num">106</td><td class="num">2</td><td class="num">89</td><td class="num">0</td></tr>
+            <tr><td>4/16</td><td class="num">12,821</td><td class="num">7,346</td><td class="num">448</td><td class="num">23</td><td class="num">352</td><td class="num">0</td></tr>
+            <tr><td>4/17</td><td class="num">6,664</td><td class="num">2,839</td><td class="num">164</td><td class="num">12</td><td class="num">241</td><td class="num">0</td></tr>
+            <tr><td>4/18</td><td class="num">5,273</td><td class="num">2,316</td><td class="num">121</td><td class="num">3</td><td class="num">165</td><td class="num">0</td></tr>
+          </tbody>
+          <tfoot>
+            <tr style="font-weight:700; background:#f0f0f5;">
+              <td>合計</td>
+              <td class="num">104,018</td>
+              <td class="num">50,935</td>
+              <td class="num">2,711</td>
+              <td class="num">117</td>
+              <td class="num">2,957</td>
+              <td class="num">12</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <h3 class="sub-title">3. 投稿一覧</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>日付</th>
+            <th>タイプ</th>
+            <th>投稿リンク</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>4/19</td><td>リール</td><td><a class="post-link" href="https://www.instagram.com/taku_nemoto_official/reel/DXTrQAxpYRz/" target="_blank">投稿を見る</a></td></tr>
+          <tr><td>4/18</td><td>カルーセル</td><td><a class="post-link" href="https://www.instagram.com/taku_nemoto_official/p/DXQfaflCQoV/" target="_blank">投稿を見る</a></td></tr>
+          <tr><td>4/16</td><td>リール</td><td><a class="post-link" href="https://www.instagram.com/taku_nemoto_official/reel/DXMD0CxAULE/" target="_blank">投稿を見る</a></td></tr>
+          <tr><td>4/15</td><td>画像</td><td><a class="post-link" href="https://www.instagram.com/taku_nemoto_official/p/DXIsEeqkmYi/" target="_blank">投稿を見る</a></td></tr>
+          <tr><td>4/14</td><td>カルーセル</td><td><a class="post-link" href="https://www.instagram.com/taku_nemoto_official/p/DXGIHraExAU/" target="_blank">投稿を見る</a></td></tr>
+          <tr><td>4/10</td><td>リール</td><td><a class="post-link" href="https://www.instagram.com/taku_nemoto_official/reel/DW8gKkdyjbT/" target="_blank">投稿を見る</a></td></tr>
+          <tr><td>4/9</td><td>画像</td><td><a class="post-link" href="https://www.instagram.com/taku_nemoto_official/p/DW57SGVk4xu/" target="_blank">投稿を見る</a></td></tr>
+          <tr><td>4/3</td><td>カルーセル</td><td><a class="post-link" href="https://www.instagram.com/taku_nemoto_official/p/DWqepAvgewk/" target="_blank">投稿を見る</a></td></tr>
+          <tr><td>4/2</td><td>画像</td><td><a class="post-link" href="https://www.instagram.com/taku_nemoto_official/p/DWnC-I2CIy-/" target="_blank">投稿を見る</a></td></tr>
+        </tbody>
+      </table>
+
+      <div class="analysis">
+        <h4>Instagram分析コメント</h4>
+        <ul>
+          <li><strong>4/16が突出:</strong> インプレッション12,821・リーチ7,346・EG448と月内最高。新規フォロー23人もこの日に集中。修学旅行・国会見学のリール投稿が効いた可能性。</li>
+          <li><strong>フォロワー成長が加速:</strong> 4月は18日間で+117人。月間換算で約195人ペースとなり、過去最高の成長率。4/10（+22人）、4/16（+23人）が牽引。</li>
+          <li><strong>月初の余波:</strong> 4/1-3のインプレッションが高いのは前月末（3/30-31）の投稿の波及効果。投稿直後よりも翌日以降にリーチが伸びるIG特有の傾向が見られる。</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== FACEBOOK SECTION ===== -->
+  <div class="section">
+    <div class="section-title">
+      <span class="platform-icon fb-icon">f</span>
+      Facebook 月次レポート
+    </div>
+    <div class="card">
+
+      <h3 class="sub-title">1. アカウントサマリー</h3>
+      <div class="summary-grid">
+        <div class="stat-card">
+          <div class="label">フォロワー数</div>
+          <div class="value">2,455</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">4月新規フォロー</div>
+          <div class="value" style="color:var(--up);">+36</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">投稿数</div>
+          <div class="value">9</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">インプレッション数</div>
+          <div class="value">60,705</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">リーチ</div>
+          <div class="value">46,712</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">エンゲージメント数</div>
+          <div class="value">2,276</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">エンゲージメント率</div>
+          <div class="value" style="color:var(--accent);">3.75%</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">プロフィールアクセス</div>
+          <div class="value">2,928</div>
+        </div>
+      </div>
+
+      <h3 class="sub-title">2. 日別推移（4/1〜4/18）</h3>
+      <div class="daily-table-wrap">
+        <table class="daily-table">
+          <thead>
+            <tr>
+              <th>日付</th>
+              <th>インプ</th>
+              <th>リーチ</th>
+              <th>EG数</th>
+              <th>フォロー</th>
+              <th>アクセス</th>
+              <th>リンクC</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>4/1</td><td class="num">6,453</td><td class="num">3,982</td><td class="num">196</td><td class="num">2</td><td class="num">134</td><td class="num">0</td></tr>
+            <tr><td>4/2</td><td class="num">1,027</td><td class="num">3,380</td><td class="num">176</td><td class="num">1</td><td class="num">196</td><td class="num">2</td></tr>
+            <tr><td>4/3</td><td class="num">548</td><td class="num">6,605</td><td class="num">344</td><td class="num">3</td><td class="num">227</td><td class="num">1</td></tr>
+            <tr><td>4/4</td><td class="num">7,892</td><td class="num">4,776</td><td class="num">139</td><td class="num">10</td><td class="num">235</td><td class="num">1</td></tr>
+            <tr><td>4/5</td><td class="num">5,151</td><td class="num">3,262</td><td class="num">65</td><td class="num">1</td><td class="num">126</td><td class="num">0</td></tr>
+            <tr><td>4/6</td><td class="num">3,380</td><td class="num">2,320</td><td class="num">39</td><td class="num">4</td><td class="num">107</td><td class="num">1</td></tr>
+            <tr><td>4/7</td><td class="num">2,727</td><td class="num">1,691</td><td class="num">34</td><td class="num">3</td><td class="num">169</td><td class="num">0</td></tr>
+            <tr><td>4/8</td><td class="num">2,517</td><td class="num">1,478</td><td class="num">33</td><td class="num">0</td><td class="num">148</td><td class="num">0</td></tr>
+            <tr><td>4/9</td><td class="num">3,577</td><td class="num">2,335</td><td class="num">99</td><td class="num">2</td><td class="num">129</td><td class="num">6</td></tr>
+            <tr><td>4/10</td><td class="num">3,960</td><td class="num">2,635</td><td class="num">152</td><td class="num">1</td><td class="num">192</td><td class="num">4</td></tr>
+            <tr><td>4/11</td><td class="num">2,471</td><td class="num">1,619</td><td class="num">64</td><td class="num">0</td><td class="num">135</td><td class="num">7</td></tr>
+            <tr><td>4/12</td><td class="num">1,444</td><td class="num">904</td><td class="num">35</td><td class="num">0</td><td class="num">112</td><td class="num">1</td></tr>
+            <tr><td>4/13</td><td class="num">2,459</td><td class="num">1,220</td><td class="num">115</td><td class="num">2</td><td class="num">151</td><td class="num">0</td></tr>
+            <tr><td>4/14</td><td class="num">3,709</td><td class="num">2,070</td><td class="num">218</td><td class="num">1</td><td class="num">190</td><td class="num">1</td></tr>
+            <tr><td>4/15</td><td class="num">3,042</td><td class="num">1,768</td><td class="num">101</td><td class="num">1</td><td class="num">225</td><td class="num">2</td></tr>
+            <tr><td>4/16</td><td class="num">3,874</td><td class="num">2,592</td><td class="num">176</td><td class="num">0</td><td class="num">220</td><td class="num">0</td></tr>
+            <tr><td>4/17</td><td class="num">3,064</td><td class="num">1,912</td><td class="num">133</td><td class="num">4</td><td class="num">102</td><td class="num">1</td></tr>
+            <tr><td>4/18</td><td class="num">3,410</td><td class="num">2,163</td><td class="num">157</td><td class="num">1</td><td class="num">130</td><td class="num">0</td></tr>
+          </tbody>
+          <tfoot>
+            <tr style="font-weight:700; background:#f0f0f5;">
+              <td>合計</td>
+              <td class="num">60,705</td>
+              <td class="num">46,712</td>
+              <td class="num">2,276</td>
+              <td class="num">36</td>
+              <td class="num">2,928</td>
+              <td class="num">27</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div class="analysis">
+        <h4>Facebook分析コメント</h4>
+        <ul>
+          <li><strong>エンゲージメント率3.75%</strong>と3プラットフォーム中最高。フォロワー規模は小さいが、投稿への反応が厚いコミュニティが形成されている。</li>
+          <li><strong>4/4がピーク:</strong> インプレッション7,892・新規フォロー10人。Xで反響の大きかった「自動コーヒー販売機」投稿のFB版が好調だった可能性。</li>
+          <li><strong>リーチとインプレッションの乖離:</strong> 4/3はインプ548に対しリーチ6,605と逆転。FB特有のアルゴリズムで過去投稿が別ユーザーにリーチした可能性。</li>
+          <li><strong>リンククリック:</strong> 4/9-11に集中（計17件）。この期間の投稿にURLを含めていた効果。</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>本レポートの集計期間は2026年4月1日〜4月19日（暫定）です。月末確定版は別途作成いたします。</p>
+    <p style="margin-top:8px;">作成: 2026年4月20日</p>
+  </div>
+
+</div>
+
+</body>
+</html>
