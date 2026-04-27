@@ -80,12 +80,12 @@
     <h3>Week 2: 51,108 ｜ 投稿数 6→6</h3>
   </div>
   <div class="card">
-    <h2><span class="badge badge-x">X</span> エンゲージメント</h2>
+    <h2><span class="badge badge-ig">IG</span> いいね合計</h2>
     <div>
-      <span class="metric">550</span>
-      <span class="change down">-22.9%</span>
+      <span class="metric">463</span>
+      <span class="change down">-66.6%</span>
     </div>
-    <h3>Week 2: 713 ｜ ENG率 1.40% → 4.79%</h3>
+    <h3>Week 2: 1,388 ｜ 投稿数 5→3</h3>
   </div>
   <div class="card">
     <h2><span class="badge badge-done">託す</span> 完了率</h2>
@@ -101,6 +101,7 @@
   <h3>⚠ 今週のヘッドライン</h3>
   <p><strong>X インプレッションが先週比 -77.5%</strong>（51,108 → 11,482）。前週はガバナンス委員会投稿が単独43,000imp（塩崎事務局長の引用RT）で数字を牽引したが、今週は同等のバズ投稿なし。<br>
   一方で<strong>エンゲージメント率は1.40%→4.79%へ大幅改善</strong>。閲覧のみ層が抜け、ファン層中心の質の高い反応に。<br>
+  <strong>IG いいねは -66.6%</strong>（1,388 → 463）。投稿数も5→3に減少。修学旅行Reel（4/16）のような動画コンテンツが今週は無く、写真投稿のみで頭打ち。<br>
   <strong>託すタスク完了率は67%</strong>。週末に発生した拓メシRINK CAFE案件が根本さんボール（30%）で持越し中。中谷さんのガントタスク担当が0件で、業務負荷が新山・三上に集中。</p>
 </div>
 
@@ -155,11 +156,38 @@
   </table>
 </div>
 
+<div style="height:20px"></div>
+
+<div class="card">
+  <h2><span class="badge badge-ig">IG</span> 投稿別いいね数比較（Week2 → Week3）</h2>
+  <div class="chart-wrap">
+    <canvas id="igPostChart"></canvas>
+  </div>
+  <div class="note">※ IG公開ページのいいね数を集計。リーチ（imp）は Meta Business Suite経由のため未取得。</div>
+</div>
+
+<div style="height:20px"></div>
+
+<div class="card">
+  <h2><span class="badge badge-ig">IG</span> エンゲージメント サマリーテーブル</h2>
+  <table>
+    <thead>
+      <tr><th>指標</th><th class="num">Week 2 (4/14-4/20)</th><th class="num">Week 3 (4/21-4/27)</th><th class="num">増減</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>投稿数</td><td class="num">5</td><td class="num">3</td><td class="num"><span class="change down">-40%</span></td></tr>
+      <tr><td>いいね合計</td><td class="num">1,388</td><td class="num">463</td><td class="num"><span class="change down">-66.6%</span></td></tr>
+      <tr><td>コメント合計</td><td class="num">22</td><td class="num">2</td><td class="num"><span class="change down">-90.9%</span></td></tr>
+      <tr><td>平均いいね/投稿</td><td class="num">277.6</td><td class="num">154.3</td><td class="num"><span class="change down">-44.4%</span></td></tr>
+      <tr><td>最高いいね投稿</td><td class="num">497（修学旅行Reel 4/16）</td><td class="num">222（国交委質疑 4/22）</td><td class="num"><span class="change down">-55.3%</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
 <div class="warn">
-  <strong>📌 IG / FB データについて</strong><br>
-  Meta Business Suiteのインサイトデータ（IGリーチ・FB閲覧数）は本レポート時点で未取得です。
-  IG/FBのWeek3比較は別途スクレイプが必要なため、本レポートではX中心の分析を行いました。<br>
-  参考：Week2のIG（4/14-4/18・5日分）はリーチ18,244、FB閲覧17,099でした。
+  <strong>📌 FB / IGリーチ について</strong><br>
+  FB閲覧数とIGリーチ（≒インプレッション）はMeta Business Suite経由のため未取得。本レポートはX公開タイムラインとIG公開エンゲージメントの数値を採用。<br>
+  参考：Week2のIG（4/14-4/18・5日分）はリーチ18,244、FB閲覧17,099。FBデータが必要であれば別途スクレイプ可能。
 </div>
 
 <!-- ============================ -->
@@ -297,12 +325,14 @@
   <p><strong>1. エンゲージメント質の改善</strong>: ENG率1.40%→4.79%。閲覧層からファン層中心へ。</p>
   <p><strong>2. 政策×時事性の安定運用</strong>: 国交委員会・福島再生土・知財小委員会と政策発信が連続し、各投稿が3,000-3,500imp/4-6%ENG率の安定圏。</p>
   <p><strong>3. 新山さんの能動対応</strong>: 高良議員返信1.5時間処理、知財小委員会の能動的アップ調整。</p>
+  <p><strong>4. IG国交委員会投稿が好反応</strong>: 4/22の国交委員会報告投稿は222いいね（W3最高）。X 3,409impと連動して刺さった。</p>
 </div>
 
 <div class="alert">
   <h3>⚠ 改善ポイント</h3>
   <p><strong>1. バズ投稿の再現性</strong>: Week2のガバナンス委員会のような外部引用RTを誘発するネタ作りを次週仕込みたい。<br>
   → 次週候補: 知財小委員会の中身公表（4/26投稿の続報）、国交委員会質疑のメディア反応引用。</p>
+  <p><strong>1-2. IG動画の再起動</strong>: Week2のReel(修学旅行 497いいね)はIGのトップ。Week3はReel 0本で動画ストックが切れた。次週は1本以上のReel投下が必須。新山さん主導で動画制作の再開を。</p>
   <p><strong>2. 中谷さんの稼働率</strong>: Week3で担当タスク0件。週次の役割分担（中谷=政策ニュース＆動画、新山=動画＆コメント、三上=政策＆速報）の再アナウンス必要。</p>
   <p><strong>3. 週末対応カバー</strong>: 4/25-26の週末に発生した案件（OECD・知財小委）が中谷さんへ集中＋一部新山フォロー。週末当番制の検討余地。</p>
   <p><strong>4. 託すタスクDBの粒度</strong>: 週末発生案件（OECD・知財小委など）がガントDB未登録。ボールトラッカー連動の自動投入が必要。</p>
@@ -376,6 +406,23 @@ new Chart(document.getElementById('engRateChart'), {
     responsive: true, maintainAspectRatio: false,
     plugins: { legend: { display: false } },
     scales: { y: { beginAtZero: true, ticks: { callback: v => v+'%' } } }
+  }
+});
+
+// IG 投稿別いいね数比較
+new Chart(document.getElementById('igPostChart'), {
+  type: 'bar',
+  data: {
+    labels: ['投稿1','投稿2','投稿3','投稿4','投稿5'],
+    datasets: [
+      { label: 'Week 2 (4/14-4/20)', data: [435, 67, 497, 172, 217], backgroundColor: W2_COLOR, borderColor: W2_BORDER, borderWidth: 1 },
+      { label: 'Week 3 (4/21-4/27)', data: [107, 222, 134, null, null], backgroundColor: W3_COLOR, borderColor: W3_BORDER, borderWidth: 1 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.raw} いいね` } } },
+    scales: { y: { beginAtZero: true } }
   }
 });
 
