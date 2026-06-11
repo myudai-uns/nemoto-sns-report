@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>根本拓 SNS運用 月次レポート（2026年5月）</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+  :root { --bg:#0f172a; --card:#1e293b; --border:#334155; --text:#e2e8f0; --muted:#94a3b8; --accent:#3b82f6; --green:#22c55e; --red:#ef4444; --orange:#f59e0b; --purple:#a855f7; --pink:#ec4899; --yellow:#fbbf24; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI','Hiragino Sans',sans-serif; background:var(--bg); color:var(--text); padding:24px; line-height:1.6; }
+  .container { max-width:1200px; margin:0 auto; }
+  h1 { font-size:1.6rem; margin-bottom:4px; }
+  h2 { font-size:1.15rem; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+  h3 { font-size:0.95rem; color:var(--muted); margin-bottom:8px; }
+  .subtitle { color:var(--muted); font-size:0.9rem; margin-bottom:20px; }
+  .section-title { font-size:1.3rem; margin:32px 0 16px; padding-left:12px; border-left:4px solid var(--accent); }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px; }
+  .grid4 { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:16px; margin-bottom:20px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; }
+  .metric { font-size:2rem; font-weight:700; }
+  .change { font-size:0.85rem; padding:2px 8px; border-radius:4px; display:inline-block; margin-left:8px; }
+  .up { background:rgba(34,197,94,0.15); color:var(--green); }
+  .down { background:rgba(239,68,68,0.15); color:var(--red); }
+  .chart-wrap-sm { position:relative; height:260px; margin-top:12px; }
+  table { width:100%; border-collapse:collapse; font-size:0.85rem; margin-top:12px; }
+  th,td { padding:8px 10px; text-align:left; border-bottom:1px solid var(--border); }
+  th { color:var(--muted); font-weight:600; font-size:0.8rem; text-transform:uppercase; }
+  td.num { text-align:right; font-variant-numeric:tabular-nums; }
+  .badge { display:inline-block; padding:1px 6px; border-radius:3px; font-size:0.75rem; font-weight:600; }
+  .badge-x { background:rgba(59,130,246,0.2); color:var(--accent); }
+  .badge-ig { background:rgba(168,85,247,0.2); color:var(--purple); }
+  .badge-reel { background:rgba(236,72,153,0.2); color:var(--pink); }
+  .badge-top { background:rgba(251,191,36,0.2); color:var(--yellow); }
+  .note { background:rgba(59,130,246,0.08); border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 8px 8px 0; margin-top:16px; font-size:0.85rem; color:var(--muted); }
+  .highlight { background:rgba(34,197,94,0.08); border:1px solid rgba(34,197,94,0.2); border-radius:8px; padding:16px; margin-bottom:20px; }
+  .highlight h3 { color:var(--green); margin-bottom:8px; font-size:1rem; }
+  .factor-card { background:#0f172a; border:1px solid var(--border); border-radius:8px; padding:16px; }
+  .factor-card h4 { font-size:0.95rem; margin-bottom:8px; color:var(--accent); }
+  .factor-card p { font-size:0.85rem; color:var(--muted); }
+  .gold { color:var(--yellow); font-weight:600; }
+  .nav { display:flex; gap:12px; margin-bottom:20px; flex-wrap:wrap; }
+  .nav a { color:var(--accent); text-decoration:none; font-size:0.85rem; padding:4px 10px; border:1px solid var(--border); border-radius:4px; }
+  .nav a:hover { background:var(--card); }
+  .imgbox { background:#fff; border-radius:8px; padding:8px; margin-top:12px; }
+  .imgbox img { width:100%; display:block; border-radius:4px; }
+  .imgbox-sm { max-width:320px; }
+  .check-row { display:flex; gap:8px; align-items:flex-start; padding:6px 0; border-bottom:1px solid #334155; font-size:0.85rem; }
+  .check-row:last-child { border-bottom:none; }
+  ul.plain { list-style:none; }
+  ul.plain li { padding:6px 0; border-bottom:1px solid #334155; font-size:0.88rem; }
+  ul.plain li:last-child { border-bottom:none; }
+  blockquote { border-left:3px solid var(--purple); padding:8px 14px; margin:8px 0; color:var(--text); background:rgba(168,85,247,0.08); border-radius:0 6px 6px 0; font-size:0.9rem; }
+  @media (max-width:768px) { .grid2,.grid4 { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>根本拓 SNS運用 月次レポート（2026年5月）</h1>
+<p class="subtitle">対象期間: 2026/5/1〜5/31｜作成日: 2026-06-11｜@taku_nemoto_｜データソース: 各PFインサイト・週次分析（Notion）</p>
+
+<div class="nav">
+  <a href="index.html">週次: 4/28〜5/11</a>
+  <a href="0414_0427.html">週次: 4/14〜4/27</a>
+  <a href="0407_0420.html">週次: 4/7〜4/20</a>
+  <a href="monthly_202605.html"><strong>月次: 2026年5月</strong></a>
+</div>
+
+<!-- ============================ -->
+<!-- 1. KPIハイライト -->
+<!-- ============================ -->
+<h2 class="section-title">1. KPIハイライト（5月）</h2>
+
+<div class="grid4">
+  <div class="card">
+    <h2><span class="badge badge-ig">IG</span> 月間インプレッション</h2>
+    <div><span class="metric">約29.5万</span><span class="change up">4月比 +63%</span></div>
+    <h3>直近3か月で最高値を更新</h3>
+  </div>
+  <div class="card">
+    <h2><span class="badge badge-reel">Reel</span> 平均再生回数</h2>
+    <div><span class="metric">約2万回</span><span class="change up">従来比 約6倍</span></div>
+    <h3>従来3,000回程度 → 1万回超が常態化</h3>
+  </div>
+  <div class="card">
+    <h2><span class="badge badge-ig">IG</span> プロフィールアクセス</h2>
+    <div><span class="metric">約7,000</span><span class="change up">4月比 +25%</span></div>
+    <h3>投稿経由の認知拡大が進行</h3>
+  </div>
+  <div class="card">
+    <h2><span class="badge badge-top">TOP</span> 月間最高リーチ投稿</h2>
+    <div><span class="metric">73,790</span></div>
+    <h3>砂子田交差点 信号機設置決定（IG・5/12）</h3>
+  </div>
+</div>
+
+<div class="highlight">
+  <h3>🌟 5月の総括</h3>
+  <p>
+    5月は<strong>Instagramのインプレッション数が大きく伸びた月</strong>となりました。特にリール動画の再生回数の増加が顕著で、従来は3,000回程度の再生にとどまる動画が多かったところ、10,000回を超える投稿が増え、<strong>平均再生回数は約20,000回</strong>まで伸びています。<br><br>
+    内容面では、<strong>「議員の働きかけが実った」型の投稿（砂子田交差点の信号機設置決定）が月間最高のリーチ</strong>を記録。X 15,000表示・48リポスト、IG 73,790インプレッションと、地域住民の実感を伴うコメントも多数寄せられました。体験型のリール動画（バレーボール・田植えなど）と合わせて、5月の伸びを牽引した二本柱です。
+  </p>
+</div>
+
+<!-- ============================ -->
+<!-- 2. 月次推移 -->
+<!-- ============================ -->
+<h2 class="section-title">2. 月次推移（3月〜5月）</h2>
+
+<div class="grid2">
+  <div class="card">
+    <h2>インプレッション数</h2>
+    <h3>X=実インプレッション／IG=ビュー／FB=閲覧数</h3>
+    <div class="chart-wrap-sm"><canvas id="chartImp"></canvas></div>
+  </div>
+  <div class="card">
+    <h2>エンゲージメント</h2>
+    <h3>いいね・コメント・シェア等の合計</h3>
+    <div class="chart-wrap-sm"><canvas id="chartEng"></canvas></div>
+  </div>
+  <div class="card">
+    <h2>プロフィールへのアクセス数</h2>
+    <h3>アカウント日次インサイトの月次合算</h3>
+    <div class="chart-wrap-sm"><canvas id="chartProf"></canvas></div>
+  </div>
+  <div class="card">
+    <h2>新しいフォロー</h2>
+    <h3>月間の新規フォロー数</h3>
+    <div class="chart-wrap-sm"><canvas id="chartFol"></canvas></div>
+  </div>
+</div>
+
+<div class="note">
+  数値は各PFインサイト（3/1〜5/31エクスポート）からの読み取り概数。<strong>IGはインプレッション・プロフィールアクセスとも3か月で最高値</strong>。Xはエンゲージメント数が1月の選挙期ピークから漸減傾向にあり、X本体への出稿本数増（後述）が課題。
+</div>
+
+<!-- ============================ -->
+<!-- 3. リール動画が伸びた要因 -->
+<!-- ============================ -->
+<h2 class="section-title">3. リール動画の再生回数が伸びた要因</h2>
+
+<div class="grid2">
+  <div class="factor-card">
+    <h4>① 動画のストーリーが伝わりやすくなった</h4>
+    <p>冒頭のオープニング映像を撮影するようになったことで、動画のテーマや全体の流れが分かりやすくなりました。視聴者が動画の内容を早い段階で理解できるため、最後まで視聴してもらいやすい構成になっています。</p>
+  </div>
+  <div class="factor-card">
+    <h4>② 字幕が読みやすくなった</h4>
+    <p>一画面に表示する文字数を減らしたことで、字幕を短時間で理解しやすくなりました。視聴者の負担が軽減され、テンポよく視聴できる動画になっています。</p>
+  </div>
+  <div class="factor-card">
+    <h4>③ 動画の内容が充実した</h4>
+    <p>以前は演説や発言の切り抜き、カメラに向かって話す動画が中心でしたが、最近は<strong>根本さんがテーマに沿ってイベントに参加・体験する動画</strong>（バレーボール大会、田植え体験、スタンプラリー、桜祭り会場の紹介など）が増えています。また、にいぱっぱの店舗前や国会議事堂前など、<strong>話している内容と関連する場所で撮影</strong>することで、テーマが視覚的にも伝わりやすくなりました。</p>
+  </div>
+  <div class="factor-card">
+    <h4>④ サムネイルで内容が分かりやすくなった</h4>
+    <p>動画のテーマが一目で分かるサムネイルを設定することで、Instagramの投稿一覧から関心のある動画を選びやすくなりました。撮影はOZMOを活用しています。</p>
+  </div>
+</div>
+
+<!-- ============================ -->
+<!-- 4. 主要投稿パフォーマンス -->
+<!-- ============================ -->
+<h2 class="section-title">4. 5月の主要投稿パフォーマンス</h2>
+
+<div class="card">
+  <table>
+    <thead>
+      <tr><th>投稿</th><th>日付</th><th style="text-align:right">X 表示</th><th style="text-align:right">IG インプ/ビュー</th><th>備考</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="gold">🥇 砂子田交差点 信号機設置決定</span></td><td>5/12</td><td class="num">15,000</td><td class="num">73,790</td><td>月間トップ。住民の実感コメント多数・48RT</td></tr>
+      <tr><td>看護の日 太田綜合病院</td><td>5/13</td><td class="num">1,196</td><td class="num">26,346</td><td>白衣姿への好意的コメント</td></tr>
+      <tr><td>バレーボール動画 <span class="badge badge-reel">Reel</span></td><td>5/17</td><td class="num">815</td><td class="num">21,000</td><td>始球式スパイク挑戦。体験型動画</td></tr>
+      <tr><td>東北新幹線GW利用者増 引用投稿</td><td>5/14</td><td class="num">10,000</td><td class="num">—</td><td>時事×地元観光（ふくしまDC）で引用拡散</td></tr>
+      <tr><td>ジュピアランド 芝桜まつり <span class="badge badge-reel">Reel</span></td><td>5/6</td><td class="num">1,419</td><td class="num">16,540</td><td>クロスPF 916リアクションで期間最多</td></tr>
+      <tr><td>田んぼアート 田植え挑戦 <span class="badge badge-reel">Reel</span></td><td>5/29</td><td class="num">1,171</td><td class="num">14,000</td><td>IGいいね406。体験型の鉄板パターン</td></tr>
+      <tr><td>大桑原つつじ園</td><td>5/9</td><td class="num">2,974</td><td class="num">10,316</td><td>花×地元。Xいいね103で月間上位</td></tr>
+      <tr><td>OECD意見交換会</td><td>5/28</td><td class="num">855</td><td class="num">9,894</td><td>国政系。Xエンゲ率は健全（約4.7%）</td></tr>
+      <tr><td>ねもトーク 5/8配信告知</td><td>5/7</td><td class="num">7,461</td><td class="num">2,995</td><td>告知系は拡散役と割り切り</td></tr>
+      <tr><td>ふくしまDC チョコボPR動画 <span class="badge badge-reel">Reel</span></td><td>5/5</td><td class="num">1,089</td><td class="num">4,027</td><td>IGエンゲ率5.29%は月間最高クラス</td></tr>
+    </tbody>
+  </table>
+  <p class="note">X=公開表示回数、IG=インサイトのインプレッション（一部は公開取得可能ないいね・ビューより推定）。高市総理関連リポスト（原文241.7万表示）は自アカウント投稿でないため対象外。</p>
+</div>
+
+<div class="grid2" style="margin-top:20px">
+  <div class="card">
+    <h2>✅ 5月に確認できた勝ちパターン</h2>
+    <div class="check-row"><span>🏆</span><span><strong>「議員の働きかけが実った」型</strong> — 砂子田交差点はX 48リポスト。成果報告は引用拡散されやすく、続報（設計→入札→工事）の連載化も有効。</span></div>
+    <div class="check-row"><span>🌸</span><span><strong>季節×地元×体験のリール動画</strong> — 芝桜・田植え・バレーボールが安定して1.4万〜2.1万再生。来年も再現性あり。</span></div>
+    <div class="check-row"><span>📰</span><span><strong>時事×地元観光の引用投稿</strong> — 東北新幹線GW利用者増はX 10,000表示。ニュース便乗×地域文脈が機能。</span></div>
+    <div class="check-row"><span>⚡</span><span><strong>当日速報の二段ラリー体制</strong> — 砂子田は12:48指示→18:36投稿（6時間弱）。修正ラリーを当日中に完遂できる体制が確立。</span></div>
+  </div>
+  <div class="card">
+    <h2>📊 媒体特性の整理</h2>
+    <div class="check-row"><span>🟣</span><span><strong>IGがリーチの主軸</strong> — 同一投稿でもIGの到達はXの約9.5倍（5月最終週実測）。新規フォロー獲得もIGが圧倒的。</span></div>
+    <div class="check-row"><span>🔵</span><span><strong>Xはエンゲ率で勝負</strong> — リーチは小さいが既存フォロワーへの深い到達。政策訴求=X／共感・地域活動=IGの住み分けが明確。</span></div>
+    <div class="check-row"><span>🟠</span><span><strong>FBは中間・シニア層</strong> — ビュー2位でシニア層のリアクションが厚い。IGと同素材の横展開で効率運用。</span></div>
+    <div class="check-row"><span>⏰</span><span><strong>投稿時刻の影響大</strong> — 深夜投稿はリーチ減衰（5/11深夜のFB投稿は138ビュー）。国政系は朝7-8時 or 夜19-21時を推奨。</span></div>
+  </div>
+</div>
+
+<!-- ============================ -->
+<!-- 5. さらなる改善点 -->
+<!-- ============================ -->
+<h2 class="section-title">5. さらなる改善点（6月に実施）</h2>
+
+<div class="grid2">
+  <div class="card">
+    <h2>① 写真：サムネイルへのタイトル追加</h2>
+    <p style="font-size:0.88rem">
+      自民党青年局に関する投稿など、<strong>毎回似た画角の写真を使用する場合は、写真にタイトルを追加</strong>します。Instagramの投稿一覧では同じような写真が並ぶと内容の違いが分かりにくいため、タイトルで各投稿のテーマを一目で判別できるようにします。<br><br>
+      次回は、<strong>東日本大震災復興加速化本部の提言がまとまった際の投稿</strong>で、写真へのタイトル追加を行います。
+    </p>
+    <div class="imgbox imgbox-sm"><img src="img/thumbnail_example.png" alt="タイトル追加サムネイルの例（石油製品の流通改善に向けたお願い）"></div>
+    <h3 style="margin-top:8px">▲ タイトル追加イメージ（石油製品の流通改善）</h3>
+  </div>
+  <div class="card">
+    <h2>② 動画：編集と撮影の工夫</h2>
+    <p style="font-size:0.88rem"><strong>【編集】オープニングはリアクションから始める</strong><br>
+    「今日は〇〇へ来ました」という説明からではなく、印象的なリアクションから始めて関心を引きます。</p>
+    <blockquote>「わあ、このピカチュウ、かわいいですね」<br>→「今回は、かわいいポケモンたちが天文台とコラボしているということで、見に来ました」</blockquote>
+    <p style="font-size:0.88rem; margin-top:12px"><strong>【撮影】体験リアクションのカットを増やす</strong><br>
+    根本さんが実際に体験しながら感じたことを話すカットの撮影を増やします。</p>
+    <blockquote>田んぼアート「どうしよう。僕のところだけ育たなかったら」<br>ポケモン企画「このレックウザ、大きいなあ」<br>チョコボ企画「芝桜チョコボ、桜が頭に乗っていてかわいい」</blockquote>
+    <p style="font-size:0.85rem; color:var(--muted); margin-top:8px">説明だけでなく率直な感想やリアクションを入れることで、親しみやすく、最後まで見たくなる動画にします。</p>
+  </div>
+</div>
+
+<!-- ============================ -->
+<!-- 6. 今後の投稿予定 -->
+<!-- ============================ -->
+<h2 class="section-title">6. 今後の投稿予定</h2>
+
+<div class="card">
+  <ul class="plain">
+    <li>🎬 ボールの扱いが下手な様子の動画 — 何の動画か確認のうえ投稿（中谷）</li>
+    <li>📊 国勢調査（中谷）</li>
+    <li>🥚 卵200個をいただいている写真を使った投稿（中谷）</li>
+    <li>🍜 ブラックラーメン（新山）</li>
+    <li>📸 高市総理と写っている写真を使った投稿（先方確認待ち）</li>
+    <li>👘 和服を着ている写真（時期を見て）</li>
+    <li>🎹 ピアノ（時期を見て）</li>
+  </ul>
+</div>
+
+<!-- ============================ -->
+<!-- 7. 付録 -->
+<!-- ============================ -->
+<h2 class="section-title">7. 付録：インサイト元データ</h2>
+
+<div class="card">
+  <h2>直近3か月ズーム（3月〜5月）</h2>
+  <div class="imgbox"><img src="img/insights_3m.png" alt="直近3か月のインサイト（インプレッション・エンゲージメント・プロフィールアクセス・新規フォロー）"></div>
+</div>
+<div class="card" style="margin-top:20px">
+  <h2>7か月推移（2025年11月〜2026年5月）</h2>
+  <div class="imgbox"><img src="img/insights_7m.png" alt="7か月推移のインサイト"></div>
+  <p class="note">1〜2月は選挙期のため数値が突出。3月以降の平常運転期で比較すると、5月のIG伸長が明確。</p>
+</div>
+
+<script>
+const C = { x:'#0ea5e9', ig:'#ec4899', fb:'#3b82f6' };
+const labels = ['3月','4月','5月'];
+const common = {
+  responsive:true, maintainAspectRatio:false,
+  plugins:{ legend:{ labels:{ color:'#e2e8f0' } } },
+  scales:{ x:{ ticks:{ color:'#94a3b8' }, grid:{ color:'#334155' } },
+           y:{ ticks:{ color:'#94a3b8' }, grid:{ color:'#334155' } } }
+};
+function lineDs(label,color,data){ return { label, data, borderColor:color, backgroundColor:color, tension:0.3, pointRadius:4 }; }
+new Chart(chartImp, { type:'line', data:{ labels, datasets:[
+  lineDs('Instagram',C.ig,[265000,181000,295000]),
+  lineDs('Facebook',C.fb,[160000,114000,123000]),
+  lineDs('X',C.x,[113000,123000,100000]) ]}, options:common });
+new Chart(chartEng, { type:'line', data:{ labels, datasets:[
+  lineDs('X',C.x,[10400,8600,7500]),
+  lineDs('Instagram',C.ig,[6300,4800,4950]),
+  lineDs('Facebook',C.fb,[4900,4100,4250]) ]}, options:common });
+new Chart(chartProf, { type:'line', data:{ labels, datasets:[
+  lineDs('Instagram',C.ig,[5700,5600,7000]),
+  lineDs('Facebook',C.fb,[6100,5150,5000]),
+  lineDs('X',C.x,[650,700,550]) ]}, options:common });
+new Chart(chartFol, { type:'line', data:{ labels, datasets:[
+  lineDs('Instagram',C.ig,[185,235,200]),
+  lineDs('Facebook',C.fb,[80,75,77]),
+  lineDs('X',C.x,[8,20,8]) ]}, options:common });
+</script>
+
+</div>
+</body>
+</html>
